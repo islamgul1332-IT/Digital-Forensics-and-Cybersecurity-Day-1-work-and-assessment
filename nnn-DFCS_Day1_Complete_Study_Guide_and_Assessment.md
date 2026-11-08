@@ -199,7 +199,7 @@ kali@ALIENWARE:~$
 | `su root` | Same, explicitly to root | Root password | Same as above |
 | `sudo -i` | Start a login shell as root through sudo | **YOUR password** | The normal way on Kali and Ubuntu |
 | `sudo` | Run one command as root | **YOUR password** | The safest and most common form |
-![alt text](image-3.png)
+![alt text](screenshots/image-3.png)
 
 **CORRECTION from live session:** `sudo` asks for YOUR password, not root's. That is the whole point — no one needs the root password. The condition is not "user must be superuser"; the user must be in the `sudo` group (listed in `/etc/sudoers`).
 
@@ -212,7 +212,7 @@ exit  # leave the root shell when done
 ```
 Output
 
-![alt text](image-1.png)
+![alt text](screenshots/screenshots/image-1.png)
 ## 4.4 Privilege Escalation — The Concept
 
 Privilege escalation means going from a low-privilege account to a higher one. It is the goal of most real attacks after initial access.
@@ -287,7 +287,7 @@ chmod 640 report.txt      # rw-r-----
 chmod 755 script.sh       # rwxr-xr-x
 chmod 600 private_key.pem # rw-------
 ```
-![alt text](image-4.png)
+![alt text](screenshots/image-4.png)
 
 **CRITICAL TRAP:** Deleting a file depends on the **directory's** write permission, not the file's permission. A file with `000` permissions can still be deleted by anyone who can write to its directory. This is why world-writable directories are dangerous even when every file inside them is locked down.
 
@@ -300,7 +300,7 @@ id zain                    # show user ID and groups
 cat /etc/passwd | grep zain
 groups zain
 ```
-![alt text](image-5.png)
+![alt text](screenshots/image-5.png)
 **Fields in `/etc/passwd`:**
 ```
 zain:x:1001:1001:,,,:/home/zain:/bin/bash
@@ -336,7 +336,7 @@ sudo apt search wireshark  # search for packages
 | `apt remove` | Removes package, keeps config | Expecting config to disappear; use `purge` for that |
 
 By Running the command sudo apt install apache2 its is installed now and is its is shown through the  command apache2 v
-![alt text](image-6.png)
+![alt text](screenshots/image-6.png)
 
 ## 6.2 systemctl — Controlling Services
 
@@ -349,8 +349,8 @@ sudo systemctl enable apache2   # start automatically at boot
 sudo systemctl disable apache2  # do not start at boot
 sudo systemctl is-active apache2 # one-word answer, useful in scripts
 ```
-![alt text](image-7.png)
-![alt text](image-8.png)
+![alt text](screenshots/image-7.png)
+![alt text](screenshots/image-8.png)
 
 ## 6.3 The Document Root Lesson
 
@@ -364,7 +364,7 @@ sudo chmod o-r public.txt    # now others cannot read it
 sudo systemctl stop apache2
 sudo systemctl start apache2
 ```
-![alt text](image-10.png)
+![alt text](screenshots/image-10.png)
 **HTTP Status Codes — The Five Families:**
 
 | Range | Family | Key Codes | Investigator's View |
@@ -393,13 +393,13 @@ kill 23269          # polite termination (SIGTERM)
 kill -9 23269       # force (SIGKILL) — no cleanup, no chance to save
 ```
 Output of top command 
-![alt text](image-11.png)
+![alt text](screenshots/image-11.png)
 output of ps and ps -A command 
-![alt text](image-12.png)
+![alt text](screenshots/image-12.png)
 output of ps aux command 
-![alt text](image-13.png)
+![alt text](screenshots/image-13.png)
 Serching a process through grep command and then stoping it through kill command 
-![alt text](image-14.png)
+![alt text](screenshots/image-14.png)
 | Signal | Number | Meaning | Use When |
 |--------|--------|---------|----------|
 | SIGTERM | 15 | Ask program to stop and tidy up | First attempt, always |
@@ -431,7 +431,7 @@ sudo grep -c '404' /var/log/apache2/access.log                                  
 sudo awk '{print $1}' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head  # busiest clients
 sudo grep '500' /var/log/apache2/access.log | tail                              # server errors
 ```
-![alt text](image-17.png)
+![alt text](screenshots/image-17.png)
 
 **Windows Side:** On Linux, authentication logs are `/var/log/auth.log` or `journalctl`. On Windows, it is the Security event log: Event ID 4624 (successful logon), 4625 (failed logon). Repeated 4625s followed by a 4624 for the same account is brute force that succeeded — the single most important pattern in entry-level SOC work.
 
@@ -444,7 +444,7 @@ cat ~/.zsh_history | tail -30   # Kali's default shell is zsh
 cat ~/.bash_history | tail -30  # bash systems
 ```
 output of history command
-![alt text](image-18.png)
+![alt text](screenshots/image-18.png)
 
 | Artefact | Where | What It Proves |
 |----------|-------|--------------|
@@ -497,9 +497,9 @@ ping -c 4 google.com
 ip a
 traceroute google.com
 ```
-![alt text](image-19.png)
+![alt text](screenshots/image-19.png)
 output of the traceroute google.com
-![alt text](image-20.png)
+![alt text](screenshots/image-20.png)
 **How TTL Actually Works:**
 - TTL is a hop counter; each router decrements it by one
 - It starts at an OS default; you see what is left
@@ -538,9 +538,9 @@ A Caesar cipher shifts every letter by a fixed amount. Day 1 demonstrated +3:
 python3 -c "s='HACKER';print(''.join(chr((ord(c)-65+3)%26+65)for c in s))"
 python3 -c "s='KDFNHU';print(''.join(chr((ord(c)-65-3)%26+65)for c in s))"
 ```
-![alt text](image-21.png)
+![alt text](screenshots/image-21.png)
 output 
-![alt text](image-22.png)
+![alt text](screenshots/image-22.png)
 **Why it is useless as security:** Only 25 possible keys. A computer tries all instantly; a human can brute-force by eye. Its value today is teaching the concept of a key and an algorithm.
 
 ## 9.3 Base64 — Encoding, Not Encryption
@@ -552,7 +552,7 @@ echo 'aGVsbG8gd29ybGQ=' | base64 -d
 ```
 
 **Output:**
-![alt text](image-23.png)
+![alt text](screenshots/image-23.png)
 
 **THE TRAILING NEWLINE TRAP:** The trailing `K` is a newline character that `echo` added. Use `echo -n` (or `printf`) when you want to encode exactly what you typed. This off-by-one newline problem causes real authentication failures in scripts and real false findings in forensics.
 
@@ -570,7 +570,7 @@ openssl enc -d -aes-256-cbc -in secret.enc -out decrypt.txt
 cat decrypt.txt                    # your original text
 ```
 encryption using SSL(AES)
-![alt text](image-24.png)
+![alt text](screenshots/image-24.png)
 
 
 
@@ -610,7 +610,7 @@ openssl pkeyutl -encrypt -in secret.txt -out encrypted.rsa -pubin -inkey Public_
 openssl pkeyutl -decrypt -in encrypted.rsa -out decrypted.txt -inkey Private_Key.pem
 cat decrypted.txt
 ```
-![alt text](image-25.png)
+![alt text](screenshots/image-25.png)
 | Concept | Meaning in This Lab |
 |---------|---------------------|
 | **Public key** | Used to ENCRYPT. Safe to share. |
@@ -781,17 +781,17 @@ sudo systemctl restart networking
 ```bash
 ip a
 ```
-![alt text](image-26.png)
+![alt text](screenshots/image-26.png)
 
 ip route 
-![alt text](image-29.png)
+![alt text](screenshots/image-29.png)
 
 
 
 
 Step 4: External Connectivity Test**
 ping -c 4 8.8.8.8
-![alt text](image-30.png)
+![alt text](screenshots/image-30.png)
 
 
 ### Analysis
@@ -814,7 +814,7 @@ ls -l testfile.txt
 ```
 Baseline: `-rw-r--r--` (644) — owner read/write, group read, others read.
 
-![alt text](image-31.png)
+![alt text](screenshots/image-31.png)
 
 **Step 2: Symbolic Notation — Others Read Removal**
 ```bash
@@ -823,7 +823,7 @@ ls -l testfile.txt
 ```
 Result: `-rw-r-----` (640) — others access revoked.
 
-![alt text](image-32.png)
+![alt text](screenshots/image-32.png)
 
 **Step 3: Symbolic Notation — Owner Execute Addition**
 ```bash
@@ -832,7 +832,7 @@ ls -l testfile.txt
 ```
 Result: `-rwxr-----` (740) — owner execution permission added.
 
-![alt text](image-33.png)
+![alt text](screenshots/image-33.png)
 
 **Step 4: Octal Notation — Restricted Access (640)**
 ```bash
@@ -840,7 +840,7 @@ chmod 640 testfile.txt
 ls -l testfile.txt
 ```
 Result: `-rw-r-----` — owner read/write (6), group read-only (4), others none (0).
-![alt text](image-34.png)
+![alt text](screenshots/image-34.png)
 
 **Step 5: Octal Notation — Standard Executable (755)**
 ```bash
@@ -849,7 +849,7 @@ ls -l testfile.txt
 ```
 Result: `-rwxr-xr-x` — owner full control (7), group/others read+execute (5).
 
-![alt text](image-35.png)
+![alt text](screenshots/image-35.png)
 
 ### Analysis
 we can create folder through mkdir command and  then create a file inside it through touch command and then we have assign permission to the users people and others on two ways symbolic and octal notation.
@@ -879,7 +879,7 @@ for shift in range(1, 26):
     print(f"shift {shift:2d}: {plaintext}")
 ```
 
-![alt text](image-36.png)
+![alt text](screenshots/image-36.png)
 
 ### Technical Analysis
 
@@ -899,7 +899,7 @@ python3 caesar_decoder.py
 # Expected: shift 3 produces HACKER — only intelligible result
 ```
 
-![alt text](image-37.png)
+![alt text](screenshots/image-37.png)
 
 **Test Vector 2: Unknown Key Validation**
 ```bash
@@ -908,7 +908,7 @@ python3 caesar_decoder.py
 # Expected: shift 3 produces WELCOME — key recovered through pattern recognition
 ```
 
-![alt text](image-38.png)
+![alt text](screenshots/image-38.png)
 
 ### Security Assessment
 The Caesar cipher keyspace contains 25 elements, exhaustible in milliseconds computationally or through manual inspection. This illustrates Shannon's principle: security through obscurity fails against known-plaintext and brute-force attacks. Modern symmetric encryption (AES-256) operates with 2^256 keyspace, rendering exhaustion computationally infeasible.
@@ -924,7 +924,7 @@ Implement AES-256-CBC encryption with PBKDF2 key derivation, analyze binary stru
 ```bash
 openssl version
 ```
-![alt text](image-39.png)
+![alt text](screenshots/image-39.png)
 
 ### Procedure
 
@@ -946,7 +946,7 @@ Password entry via interactive prompt (preventing shell history exposure per for
 | `-salt` | Random 8-byte salt generation; ensures unique ciphertext per encryption event |
 | `-pbkdf2` | Password-Based Key Derivation Function 2; replaces deprecated EVP_BytesToKey |
 
-![alt text](image-40.png)
+![alt text](screenshots/image-40.png)
 **Step 3: File Size Analysis**
 ```bash
 ls -l secret.txt secret.enc
@@ -954,7 +954,7 @@ ls -l secret.txt secret.enc
 Observed: 18 bytes (plaintext) → 48 bytes (ciphertext)  
 Composition: 8 bytes (`Salted__`) + 8 bytes (salt) + 32 bytes (2×16-byte AES blocks with PKCS#7 padding)
 
-![alt text](image-41.png)
+![alt text](screenshots/image-41.png)
 
 **Step 4: Binary Structure Inspection**
 ```bash
@@ -963,7 +963,7 @@ xxd -l 16 secret.enc
 Output analysis:
 - Bytes 0-7: `53 61 6c 74 65 64 5f 5f` → ASCII `Salted__` (OpenSSL magic header)
 - Bytes 8-15: Random salt (instance-unique)
-![alt text](image-42.png)
+![alt text](screenshots/image-42.png)
 
 **Step 5: File Type Identification**
 ```bash
@@ -971,7 +971,7 @@ file secret.enc
 ```
 Result: `openssl enc'd data with salted password` — positive identification without key material.
 
-![alt text](image-43.png)
+![alt text](screenshots/image-43.png)
 
 **Step 6: Decryption Verification**
 ```bash
@@ -980,7 +980,7 @@ cat decrypt.txt
 ```
 Round-trip integrity confirmed: original plaintext recovered.
 
-![alt text](image-44.png)
+![alt text](screenshots/image-44.png)
 
 **Step 7: Salt Randomness Validation**
 ```bash
@@ -989,7 +989,7 @@ xxd -l 16 secret2.enc
 ```
 Observation: Identical `Salted__` magic; divergent salt bytes; completely different ciphertext. Same password, different cryptographic output.
 
-![alt text](image-45.png)
+![alt text](screenshots/image-45.png)
 
 ### Forensic Analysis: The `Salted__` Header
 
@@ -1036,9 +1036,9 @@ Between September 2014 and February 2015, Lenovo pre-installed Superfish VisualD
 | Certificate Transparency | Public CT logs for all certificates | Enables detection of unauthorized certificates |
 | User Education | Training to never bypass certificate warnings | Prevents click-through of MITM warnings |
 
-![alt text](image-46.png)
+![alt text](screenshots/image-46.png)
 
-![alt text](image-47.png)
+![alt text](screenshots/image-47.png)
 
 ### Analysis
 The Superfish incident demonstrates how trust model compromise enables universal MITM. The root certificate installation subverted the entire PKI system. Modern defenses like certificate transparency and HPKP (deprecated but conceptually important) aim to detect such compromises. The incident cost Lenovo millions and remains a cautionary tale about supply chain trust.
@@ -1057,7 +1057,7 @@ Identify public IP addressing, classify network range, and analyze routing path 
 curl ifconfig.me
 ```
 Result:
-![alt text](image-48.png)
+![alt text](screenshots/image-48.png)
 
 **Step 2: Address Classification**
 
@@ -1069,7 +1069,7 @@ Result:
 
 Analysis: IP 192.168.25,132— first octet [192] — Class c — private  addressing.
 
-![alt text](image-49.png)
+![alt text](screenshots/image-49.png)
 
 **Step 3: Traceroute Execution**
 ```bash
@@ -1077,7 +1077,7 @@ traceroute google.com
 ```
 Captures hop-by-hop path with latency metrics.
 
-![alt text](image-50.png)
+![alt text](screenshots/image-50.png)
 
 **Step 4: TTL-Based Distance Estimation**
 
@@ -1093,7 +1093,7 @@ Result: [X] hops
 
 **Reliability Limitations:**  
 TTL values are mutable—firewalls rewrite TTL, NAT modifications occur, tunnels obscure intermediate hops, asymmetric routing creates divergent paths. TTL analysis provides triage intelligence, not forensic proof.
-![alt text](image-51.png)
+![alt text](screenshots/image-51.png)
 
 ### Analysis
 The destination IP (142.250.202.142) falls into Class B (first octet 142), reflecting a publicly routable commercial allocation for global infrastructure. A steady remaining time-to-live (ttl=128) points to an initial value of 128—common for Windows-based server responses—while the stable sub-40ms round-trip times indicate consistent routing path behavior. However, using terminal TTL values to precisely deduce total hop counts remains constrained because intermediate network devices can occasionally alter or obscure packet header decrement patterns.
