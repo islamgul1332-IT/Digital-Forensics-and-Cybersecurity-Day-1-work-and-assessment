@@ -3,7 +3,7 @@
 **Instructor:** Waseem Abbas Khan  
 **Date:** 24 October 2026  
 **Candidate:** Islam Gul  
-**Repository:** [Your GitHub URL]
+**Repository:** https://github.com/islamgul1332-IT/Digital-Forensics-and-Cybersecurity-Day-1-work-and-assessment
 
 ---
 
