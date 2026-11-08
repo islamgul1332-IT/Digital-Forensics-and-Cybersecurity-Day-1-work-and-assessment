@@ -212,7 +212,7 @@ exit  # leave the root shell when done
 ```
 Output
 
-![alt text](screenshots/screenshots/image-1.png)
+![alt text](screenshots/image-1.png)
 ## 4.4 Privilege Escalation — The Concept
 
 Privilege escalation means going from a low-privilege account to a higher one. It is the goal of most real attacks after initial access.
